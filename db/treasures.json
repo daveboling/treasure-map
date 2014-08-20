@@ -1,0 +1,75 @@
+{  
+   "_id":{  
+      "$oid":"000000000000000000000001"
+   },
+   "treasure":"diamonds",
+   "location":{  
+      "lat":36,
+      "lng":86,
+      "name":"Nashville"
+   },
+   "tags":[  
+      "fun",
+      "diamond"
+   ],
+   "hints":[  
+      "Go to the batman building.",
+      "Kick Batman's ass",
+      "Get diamonds"
+   ],
+   "order":3,
+   "isFound" : false,
+   "difficulty" : 1
+}
+
+{  
+   "_id":{  
+      "$oid":"000000000000000000000002"
+   },
+   "treasure":"food",
+   "location":{  
+      "lat":35,
+      "lng":82,
+      "name":"Hendersonville"
+   },
+   "tags":[  
+      "seafood",
+      "junk food"
+   ],
+   "hints":[  
+      "Go to Hendersonville",
+      "Eat shit.",
+      "Die."
+   ],
+   "order":2,
+   "isFound" : false,
+   "difficulty" : 3
+
+}
+
+{  
+   "_id":{  
+      "$oid":"000000000000000000000003"
+   },
+   "treasure":"Stuff",
+   "location":{  
+      "lat":35,
+      "lng":87,
+      "name":"Murfreesboro"
+   },
+   "tags":[  
+      "Crap",
+      "More Crap"
+   ],
+   "hints":[ 
+      "Go to Murfreesboro",
+      "Get a bunch of stuff.",
+      "Sell the stuff."
+   ],
+   "order":1,
+   "isFound" : false,
+   "difficulty" : 2
+
+}
+
+
