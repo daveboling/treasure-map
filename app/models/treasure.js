@@ -5,13 +5,13 @@ var Mongo = require('mongodb'),
      path = require('path');
 
 function Treasure(o){
-  this.name       = o.name;
-  this.location   = o.location;
-  this.difficulty = o.difficulty;
-  this.tags       = o.tags.split(',').map(function(x){ return x.trim(); });
-  this.hints      = o.hints;
-  this.photos     = o.photos;
-  this.order      = o.order;
+  this.name       = o.name[0];
+  this.location   = {lat: o.lat[0], lng: o.lat[0], name: o.locationName[0]};
+  this.difficulty = o.difficulty[0];
+  this.tags       = o.tags[0].split(',').map(function(x){ return x.trim(); });
+  this.hints      = o.hints[0];
+  this.photos     = [];
+  this.order      = o.order[0];
   this.isFound    = false;
 }
 
@@ -28,10 +28,9 @@ Treasure.prototype.found = function(treasure, cb){
 };
 
 Treasure.create = function(fields, files, cb){
-	console.log(fields);
 	var t = new Treasure(fields);
 	  t.save(function(){
-	  	Treasure.uploadPhotos(files, cb);
+	  	t.addPhotos(files, cb);
 	  });
 };
 
@@ -46,30 +45,28 @@ Treasure.findById = function(query, cb){
   });
 };
 
-Treasure.uploadPhotos = function(files, cb){
-  var dir = __dirname + '/../static/img' + this._id, //Set the path for destination directory
-   exists = fs.existsSync(dir), //existsSync checks to see if dir exists already, returns true or false
-     self = this;
+Treasure.prototype.addPhotos = function(files, cb){
+  var dir    = __dirname + '/../static/img/' + this._id,
+      staticRoot   = '/img/' + this._id + '/',
+      exists = fs.existsSync(dir),
+      self   = this;
 
-  //If it doesn't exist...
   if(!exists){
-  	fs.mkdirSync(dir); //..go ahead and make the directory
+    fs.mkdirSync(dir);
   }
 
-  //files is an array of any files grabbed from type='file' fields on the HTML form
   files.photos.forEach(function(photo){
-    var ext     = path.extname(photo), //Rip off the extension of the file (e.g. .jpg, .gif)
-       relative = '/img/' +  self._id + '/' + self.photos.length + ext,
-       absolute = __dirname + '/img/' +  self._id + '/' + self.photos.length + ext;
+    var ext = path.extname(photo.path),
+        fileName = self.photos.length + ext,
+        rel = staticRoot + fileName,
+        abs = dir + '/' + fileName;
+    fs.renameSync(photo.path, abs);
 
-    fs.renameSync(photo.path, absolute); //Move old path to the new absolute path
-    
-    //Since we're already in our server, we only need to push the relative path to the photos array
-    self.photos.push(relative);   
+    self.photos.push(rel);
+
   });
 
-  Treasure.collection.save(self, cb);
-
+  self.save(cb);
 };
 
 
