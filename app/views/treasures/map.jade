@@ -15,7 +15,7 @@ block content
       each treasure in treasures
         .row
           .col-xs-2
-            -if(!treasure.isLinkable)
+            -if(treasure.isLinkable)
               a(href='/treasures/#{treasure._id}')= treasure.name
             -else
               = treasure.name

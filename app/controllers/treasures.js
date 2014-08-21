@@ -11,6 +11,10 @@ exports.create = function(req, res){
   var form = new mp.Form();
   form.parse(req, function(err, fields, files){
     Treasure.create(fields, files, function(){
+
+      console.log('----MULTIPARTY FIELDS START----');
+      console.log(fields);
+      console.log('----MULTIPARTY FIELDS END----');
       res.redirect('/treasures');
     });
   });

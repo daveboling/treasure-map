@@ -11,9 +11,9 @@ function Treasure(o){
   this.tags       = o.tags[0].split(',').map(function(x){ return x.trim(); });
   this.hints      = o.hints.map(function(x){ return x;});
   this.photos     = [];
-  this.order      = o.order[0];
+  this.order      = parseInt(o.order[0]);
   this.isFound    = false;
-  this.isLinkable = (o.order[0] === '1') ? false : true;
+  this.isLinkable = ((parseInt(o.order[0]) === 1) ? true : false);
 }
 
 Object.defineProperty(Treasure, 'collection', {
@@ -27,13 +27,23 @@ Treasure.prototype.save = function(cb){
 Treasure.found = function(treasure, cb){
   var counter = treasure.order;
   counter++;
+
+  console.log('--ORDER COUNTER--');
+  console.log(counter);
+  console.log('--ORDER COUNT END--');
+
   Treasure.collection.update({order: counter}, {$set:{isLinkable: true}}  , function(){
-    Treasure.collection.update({_id: treasure._id},{$set:{isFound: true}}, cb);
+    Treasure.collection.update({_id: treasure._id},{$set:{isFound: true, isLinkable: false}}, cb);
   });
 };
 
 Treasure.create = function(fields, files, cb){
   var t = new Treasure(fields);
+
+  console.log('----CREATE OBJECT START---');
+  console.log(t);
+  console.log('----CREATE OBJECT END---');
+
   t.save(function(){
     t.addPhotos(files, cb);
   });
@@ -41,7 +51,8 @@ Treasure.create = function(fields, files, cb){
 
 Treasure.all = function(filter, direction, header, cb){
   filter = (filter) ? {tags: filter} : {};
-  Treasure.collection.find(filter).sort({header: parseInt(direction)}).toArray(cb);
+
+  Treasure.collection.find(filter).sort({order: -1}).toArray(cb);
 };
 
 Treasure.findById = function(query, cb){
@@ -74,6 +85,5 @@ Treasure.prototype.addPhotos = function(files, cb){
 
   self.save(cb);
 };
-
 
 module.exports = Treasure;
