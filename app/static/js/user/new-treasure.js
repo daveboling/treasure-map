@@ -1,5 +1,5 @@
 /* global google */
-/* jshint camelcase:false */
+/* jshint camelcase:false, quotmark:false*/
 
 (function(){
   'use strict';

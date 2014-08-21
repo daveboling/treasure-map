@@ -25,7 +25,7 @@
   "disallowSpacesInsideObjectBrackets": "all",
   "disallowSpacesInsideArrayBrackets": "all",
   "disallowSpacesInsideParentheses": true,
-  "requireCommaBeforeLineBreak": true,
+  "requireCommaBeforeLineBreak": false,
   "requireCamelCaseOrUpperCaseIdentifiers": true,
   "disallowMultipleLineStrings": true,
   "validateQuoteMarks": { "mark": "'", "escape": true },

@@ -6,7 +6,7 @@ var Mongo = require('mongodb'),
 
 function Treasure(o){
   this.name       = o.name[0];
-  this.location   = {lat: o.lat[0], lng: o.lat[0], name: o.locationName[0]};
+  this.location   = {lat: parseFloat(o.lat[0]), lng: parseFloat(o.lng[0]), name: o.locationName[0]};
   this.difficulty = o.difficulty[0];
   this.tags       = o.tags[0].split(',').map(function(x){ return x.trim(); });
   this.hints      = o.hints.map(function(x){ return x;});
@@ -24,14 +24,14 @@ Treasure.prototype.save = function(cb){
 };
 
 Treasure.prototype.found = function(treasure, cb){
-  Treasure.collection.update({_id: treasure._id}, {$set: {isFound: true} }, cb);
+  Treasure.collection.update({_id: treasure._id},{$set:{isFound: true}}, cb);
 };
 
 Treasure.create = function(fields, files, cb){
-	var t = new Treasure(fields);
-	  t.save(function(){
-	  	t.addPhotos(files, cb);
-	  });
+  var t = new Treasure(fields);
+  t.save(function(){
+    t.addPhotos(files, cb);
+  });
 };
 
 Treasure.all = function(cb){
@@ -41,7 +41,7 @@ Treasure.all = function(cb){
 Treasure.findById = function(query, cb){
   var _id = Mongo.ObjectID(query);
   Treasure.collection.findOne({_id : _id}, function(err, obj){
-  	cb(obj);
+    cb(obj);
   });
 };
 

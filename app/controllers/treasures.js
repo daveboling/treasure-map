@@ -4,34 +4,34 @@ var Treasure = require('../models/treasure'),
           mp = require('multiparty');
 
 exports.init = function(req, res){
-	res.render('treasures/init');
+  res.render('treasures/init');
 };
 
 exports.create = function(req, res){
-	var form = new mp.Form();
-	form.parse(req, function(err, fields, files){
-		Treasure.create(fields, files, function(){
-			res.redirect('/treasures');
-		});
-	});
+  var form = new mp.Form();
+  form.parse(req, function(err, fields, files){
+    Treasure.create(fields, files, function(){
+      res.redirect('/treasures');
+    });
+  });
 };
 
 exports.map = function(req, res){
-	Treasure.all(function(err, treasures){
-		res.render('treasures/map', {treasures: treasures});
-	});
+  Treasure.all(function(err, treasures){
+    res.render('treasures/map', {treasures: treasures});
+  });
 };
 
 exports.objectives = function(req, res){
-	Treasure.findById(req.params.id, function(treasure){
-		res.render('treasures/objective', {treasure: treasure});
-	});
+  Treasure.findById(req.params.id, function(treasure){
+    res.render('treasures/objective', {treasure: treasure});
+  });
 };
 
 exports.found = function(req, res){
-	Treasure.findById(req.params.id, function(treasure){
-		Treasure.found(treasure, function(){
-			res.redirect('/treasures/' + req.params.id);
-		});
-	});
+  Treasure.findById(req.params.id, function(treasure){
+    Treasure.found(treasure, function(){
+      res.redirect('/treasures/' + req.params.id);
+    });
+  });
 };
