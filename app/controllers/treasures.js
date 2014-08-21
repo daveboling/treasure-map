@@ -17,7 +17,7 @@ exports.create = function(req, res){
 };
 
 exports.map = function(req, res){
-	Treasure.all(function(treasures){
+	Treasure.all(function(err, treasures){
 		res.render('treasures/map', {treasures: treasures});
 	});
 };

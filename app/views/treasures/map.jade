@@ -1,0 +1,27 @@
+extends ../shared/template
+block content
+    h2 Map
+    .row
+     .col.xs-12
+        #map
+    .row
+     .col-xs-2 Name
+     .col-xs-2 Location
+     .col-xs-2 Difficulty
+     .col-xs-2 Tags
+     .col-xs-2 Order
+     .col-xs-2 Found
+    .row#waypoints
+      each treasure in treasures
+        .row
+          .col-xs-2: a(href='/treasure/#{treasure._id}')= treasure.name
+          .col-xs-2.coordinate(data-lat=treasure.location.lat, data-lng=treasure.location.lng)= treasure.location.name
+          .col-xs-2= treasure.difficulty
+          .col-xs-2
+            each tag in treasure.tags
+              .tag= tag
+          .col-xs-2= treasure.order
+          .col-xs-2= (treasure.isFound) ? 'Yes' : 'No'
+block scripts
+    script(src='/js/user/map.js')
+

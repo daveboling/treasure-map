@@ -9,7 +9,7 @@ function Treasure(o){
   this.location   = {lat: o.lat[0], lng: o.lat[0], name: o.locationName[0]};
   this.difficulty = o.difficulty[0];
   this.tags       = o.tags[0].split(',').map(function(x){ return x.trim(); });
-  this.hints      = o.hints[0];
+  this.hints      = o.hints.map(function(x){ return x;});
   this.photos     = [];
   this.order      = o.order[0];
   this.isFound    = false;

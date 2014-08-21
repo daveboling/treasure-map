@@ -2,7 +2,7 @@
    "_id":{  
       "$oid":"000000000000000000000001"
    },
-   "treasure":"diamonds",
+   "name":"diamonds",
    "location":{  
       "lat":36,
       "lng":86,
@@ -26,7 +26,7 @@
    "_id":{  
       "$oid":"000000000000000000000002"
    },
-   "treasure":"food",
+   "name":"food",
    "location":{  
       "lat":35,
       "lng":82,
@@ -51,7 +51,7 @@
    "_id":{  
       "$oid":"000000000000000000000003"
    },
-   "treasure":"Stuff",
+   "name":"Stuff",
    "location":{  
       "lat":35,
       "lng":87,
