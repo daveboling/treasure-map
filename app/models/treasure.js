@@ -13,6 +13,7 @@ function Treasure(o){
   this.photos     = [];
   this.order      = o.order[0];
   this.isFound    = false;
+  this.isLinkable = (o.order[0] === '1') ? false : true;
 }
 
 Object.defineProperty(Treasure, 'collection', {
@@ -23,8 +24,12 @@ Treasure.prototype.save = function(cb){
   Treasure.collection.save(this, cb);
 };
 
-Treasure.prototype.found = function(treasure, cb){
-  Treasure.collection.update({_id: treasure._id},{$set:{isFound: true}}, cb);
+Treasure.found = function(treasure, cb){
+  var counter = treasure.order;
+  counter++;
+  Treasure.collection.update({order: counter}, {$set:{isLinkable: true}}  , function(){
+    Treasure.collection.update({_id: treasure._id},{$set:{isFound: true}}, cb);
+  });
 };
 
 Treasure.create = function(fields, files, cb){
@@ -34,8 +39,9 @@ Treasure.create = function(fields, files, cb){
   });
 };
 
-Treasure.all = function(cb){
-  Treasure.collection.find().sort({order: 1}).toArray(cb);
+Treasure.all = function(filter, direction, header, cb){
+  filter = (filter) ? {tags: filter} : {};
+  Treasure.collection.find(filter).sort({header: parseInt(direction)}).toArray(cb);
 };
 
 Treasure.findById = function(query, cb){

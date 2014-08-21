@@ -1,13 +1,10 @@
 /* global google:true, map:true, directionsDisplay:true, directionsService:true */
 
 (function(){
-
+'use strict';
 var directionsDisplay, //Needed for Waypoints API
-directionsService = new google.maps.DirectionsService(), //Needed for Waypoints API
-map;
+directionsService = new google.maps.DirectionsService(); //Needed for Waypoints API
 
-
-  'use strict';
   $(document).ready(function(){
     var arr = $('#waypoints').find('.coordinate'),
     waypoints = $.makeArray(arr);
@@ -48,14 +45,14 @@ map;
     };
 
     //Sends our request to directionsService where it will tell us if we're crazy or not
-	//directionsService = new google.maps.DirectionsService();
 	directionsService.route(request, function(response, status) {
-				if (status == google.maps.DirectionsStatus.OK) {
+				if (status === google.maps.DirectionsStatus.OK) {
 					directionsDisplay.setDirections(response);
 				}
-				else
+				else {
 				console.log(status);
 				console.log(response);
+      }
 			});
 }
 

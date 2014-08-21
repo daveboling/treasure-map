@@ -1,0 +1,25 @@
+extends ../shared/template
+block content
+    h2 Objective
+
+    .row
+      .col-xs-6#coordinates(data-lat=treasure.location.lat, data-lng=treasure.location.lng)
+            #map
+        .col-xs-6
+            .photos
+                each photo in treasure.photos
+                    img.photo(src='#{photo}')
+    .row
+        .col-xs-12= treasure.name
+    .row
+        .col-xs-6
+            ol.hints
+                each hint in treasure.hints
+                    li= hint
+
+        .col-xs-6
+            form(method='post' action='/treasures/#{treasure._id}')
+                -if(!treasure.isFound)
+                    button.btn Found it!
+block scripts
+    script(src='/js/user/objective.js')
