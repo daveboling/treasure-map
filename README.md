@@ -1,32 +1,38 @@
-## name of project
+## Google Maps API - Treasure Map
 ### Code Badges
-build status icon
-coverage status icon
+[![Build Status](https://travis-ci.org/kadowki/treasure-map.svg)](https://travis-ci.org/kadowki/treasure-map)
+[![Coverage Status](https://coveralls.io/repos/kadowki/treasure-map/badge.png)](https://coveralls.io/r/kadowki/treasure-map)
 
 ### About
-write a description about your project
+A treasure map based on Google Maps API.
 
 ### Models
 ```
-Model 1
-prop-a
-prop-b
-.classMethod-c
-#instanceMethod-d
-```
+Treasure
+name
+location
+difficulty
+tags
+hints
+photos
+order
+isFound
+isLinkable
 
-```
-Model 2
-prop-e
-prop-f
-.classMethod-g
-#instanceMethod-h
+.all
+.found
+.create
+.findById
+
+#save
+#addPhotos
 ```
 
 ### Features
-- feature 1
-- feature 2
-- feature 3
+- Google Maps API
+- Node.js
+- Bootstrap
+- jQuery
 
 ### Running Tests
 ```bash
@@ -35,7 +41,7 @@ $ npm test
 ```
 
 ### Contributors
-- [Chyld Medford](https://github.com/chyld)
+- [David D Boling](https://github.com/kadowki)
 
 ### License
 [MIT](LICENSE)
