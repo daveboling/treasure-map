@@ -12,21 +12,20 @@ exports.create = function(req, res){
   form.parse(req, function(err, fields, files){
     Treasure.create(fields, files, function(){
 
-      console.log('----MULTIPARTY FIELDS START----');
-      console.log(fields);
-      console.log('----MULTIPARTY FIELDS END----');
+      //console.log('----MULTIPARTY FIELDS START----');
+      //console.log(fields);
+      //console.log('----MULTIPARTY FIELDS END----');
+
       res.redirect('/treasures');
     });
   });
 };
 
 exports.map = function(req, res){
-  var tag       = req.query.tag;
-  var direction = req.query.direction || 1;
-  var header    = req.query.header;
+  var tag = req.query.tag;
 
-  Treasure.all(tag, direction, header, function(err, treasures){
-    res.render('treasures/map', {treasures: treasures, tag: tag, direction: direction, header: header});
+  Treasure.all(tag, function(err, treasures){
+    res.render('treasures/map', {treasures: treasures, tag: tag});
   });
 };
 

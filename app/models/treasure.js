@@ -4,6 +4,7 @@ var Mongo = require('mongodb'),
        fs = require('fs'),
      path = require('path');
 
+//Always remember to parse strings into integer or data will not turn out how you think
 function Treasure(o){
   this.name       = o.name[0];
   this.location   = {lat: parseFloat(o.lat[0]), lng: parseFloat(o.lng[0]), name: o.locationName[0]};
@@ -28,9 +29,9 @@ Treasure.found = function(treasure, cb){
   var counter = treasure.order;
   counter++;
 
-  console.log('--ORDER COUNTER--');
-  console.log(counter);
-  console.log('--ORDER COUNT END--');
+  //console.log('--ORDER COUNTER--');
+  //console.log(counter);
+  //console.log('--ORDER COUNT END--');
 
   Treasure.collection.update({order: counter}, {$set:{isLinkable: true}}  , function(){
     Treasure.collection.update({_id: treasure._id},{$set:{isFound: true, isLinkable: false}}, cb);
@@ -40,16 +41,16 @@ Treasure.found = function(treasure, cb){
 Treasure.create = function(fields, files, cb){
   var t = new Treasure(fields);
 
-  console.log('----CREATE OBJECT START---');
-  console.log(t);
-  console.log('----CREATE OBJECT END---');
+  //console.log('----CREATE OBJECT START---');
+  //console.log(t);
+  //console.log('----CREATE OBJECT END---');
 
   t.save(function(){
     t.addPhotos(files, cb);
   });
 };
 
-Treasure.all = function(filter, direction, header, cb){
+Treasure.all = function(filter, cb){
   filter = (filter) ? {tags: filter} : {};
 
   Treasure.collection.find(filter).sort({order: -1}).toArray(cb);

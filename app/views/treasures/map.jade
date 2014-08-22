@@ -1,31 +1,32 @@
 extends ../shared/template
 block content
-    h2 Map
-    .row
-     .col.xs-12
-        #map
-    .row
-     .col-xs-2: a(href="/treasures?#{((tag) ? '&tag=' + tag: '') + '&header=name&direction=' + ((direction > 0) ? -1 : 1)}") Name
-     .col-xs-2: a(href="/treasures?#{((tag) ? '&tag=' + tag: '') + '&header=location&direction=' + ((direction > 0) ? -1 : 1)}") Location
-     .col-xs-2: a(href="/treasures?#{((tag) ? '&tag=' + tag: '') + '&header=name&direction=' + ((direction > 0) ? -1 : 1)}") Difficulty
-     .col-xs-2 Tags
-     .col-xs-2: a(href="/treasures?#{((tag) ? '&tag=' + tag: '') + '&header=order&direction=' + ((direction > 0) ? -1 : 1)}") Order
-     .col-xs-2 Found
-    .row#waypoints
+    h2 Treasure Map
+    script(src='/js/vendor/tablesort.min.js')
+
+    #map
+    table.table.table-bordered.table-hover#data
+      tr.no-sort
+       th Name
+       th Location
+       th Difficulty
+       th Tags
+       th Order
+       th Found
       each treasure in treasures
-        .row
-          .col-xs-2
+        tr
+          td
             -if(treasure.isLinkable)
               a(href='/treasures/#{treasure._id}')= treasure.name
             -else
               = treasure.name
-          .col-xs-2.coordinate(data-lat=treasure.location.lat, data-lng=treasure.location.lng)= treasure.location.name
-          .col-xs-2= treasure.difficulty
-          .col-xs-2
-            each tag in treasure.tags
-              .tag: a(href="/treasures?#{((tag) ? '&tag=' + tag: '') + ((direction) ? '&direction=' : '') + ((header) ? '&header=' + header : '')}")= tag
-          .col-xs-2= treasure.order
-          .col-xs-2= (treasure.isFound) ? 'Yes' : 'No'
+          td.coordinate(data-lat=treasure.location.lat, data-lng=treasure.location.lng)= treasure.location.name
+          td= treasure.difficulty
+          td
+            each tag, index in treasure.tags
+              .tag: a(href="/treasures?#{((tag) ? '&tag=' + tag: '')}")= tag
+          td= treasure.order
+          td= (treasure.isFound) ? 'Yes' : 'No'
+    #pirate
 block scripts
     script(src='/js/user/map.js')
 

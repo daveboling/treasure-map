@@ -1,7 +1,8 @@
 extends ../shared/template
 block content
-    h2 Objective
-
+    h2 Objective ##{treasure.order}
+    .row
+        .col-xs-12: h4= treasure.name
     .row
       .col-xs-6#coordinates(data-lat=treasure.location.lat, data-lng=treasure.location.lng)
             #map
@@ -10,16 +11,17 @@ block content
                 each photo in treasure.photos
                     img.photo(src='#{photo}')
     .row
-        .col-xs-12= treasure.name
-    .row
-        .col-xs-6
+        .col-xs-12: h4 Directions
             ol.hints
                 each hint in treasure.hints
                     li= hint
-
-        .col-xs-6
+    hr
+    .row
+        .col-xs-12
             form(method='post' action='/treasures/#{treasure._id}')
                 -if(!treasure.isFound)
                     button.btn Found it!
+
+
 block scripts
     script(src='/js/user/objective.js')
